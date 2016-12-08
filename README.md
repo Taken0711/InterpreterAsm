@@ -5,7 +5,7 @@
 
 ### Data Processing
 
-OP |Instruction				|OPTYPE|OPCODE	|XXX|XXX|Encoding						|
+OP |Instruction				|OPTYPE|OPCODE	|XXX|XXX|Encoding
 ---|------------------------|------|--------|---|---|--------
 AND|Bitwise AND				|010000|0000	|Rm |Rdn|AND\<c\> \<Rdn\>,\<Rm\>
 EOR|Exclusive OR			|010000|0001	|Rm |Rdn|EOR\<c\> \<Rdn\>,\<Rm\>
@@ -26,13 +26,13 @@ MVN|Bitwise NOT				|010000|1111	|Rm |Rd |MVN\<c\> \<Rd\>,\<Rm\>
 
 ### Shift, add, sub, move
 
-OP |Instruction							|XXX|XX|XX		|XXX		|XXX|XXX|Encoding
----|------------------------------------|---|--|--------|-----------|---|---|--------
-LSL|Logical Shift Left (immediate)		|000|00|\#imm5	|x			|Rm |Rd |LSL\<c\> \<Rd\>,\<Rm\>,\#imm5
-LSR|Logical Shift Right (immediate)		|000|01|\#imm5	|x			|Rm |Rd |LSR\<c\> \<Rd\>,\<Rm\>,\#imm5
-ASR|Arithmetic Shift Right (immediate)	|000|10|\#imm5	|x			|Rm |Rd |ASR\<c\> \<Rd\>,\<Rm\>,\#imm5
-ADD|Add (register)						|000|11|00		|Rm			|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\<Rm\>
-SUB|Substract (register)				|000|11|01		|Rm			|Rn |Rd |SUB\<c\> \<Rd\>,\<Rn\>,\<Rm\>
-ADD|Add (immediate)						|000|11|10		|\#imm3		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\#imm3
-MOV|Move (immediate)					|001|00|Rd		|\#imm8		|x	|x	|MOV\<c\> \<Rd\>,\#imm8
+OP |Instruction							|XXX|XX|XX		|X		|XX		|XXX|XXX|Encoding
+---|------------------------------------|---|--|--------|-------|-------|---|---|--------
+LSL|Logical Shift Left (immediate)		|000|00|\#imm5	|		|		|Rm |Rd |LSL\<c\> \<Rd\>,\<Rm\>,\#imm5
+LSR|Logical Shift Right (immediate)		|000|01|\#imm5	|		|		|Rm |Rd |LSR\<c\> \<Rd\>,\<Rm\>,\#imm5
+ASR|Arithmetic Shift Right (immediate)	|000|10|\#imm5	|		|		|Rm |Rd |ASR\<c\> \<Rd\>,\<Rm\>,\#imm5
+ADD|Add (register)						|000|11|00		|Rm		|		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\<Rm\>
+SUB|Substract (register)				|000|11|01		|Rm		|		|Rn |Rd |SUB\<c\> \<Rd\>,\<Rn\>,\<Rm\>
+ADD|Add (immediate)						|000|11|10		|\#imm3	|		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\#imm3
+MOV|Move (immediate)					|001|00|Rd		|		|\#imm8	|	|	|MOV\<c\> \<Rd\>,\#imm8
 
