@@ -3,6 +3,8 @@
 \#0 is an immediate value to be used by the operation
 \<c\> Is an optional field. It specifies the condition under which the instruction is executed. If \<c\> is omitted, it defaults to always (AL).
 
+### Data Processing
+
 |OP |Instruction			|OPTYPE|OPCODE	|XXX|XXX|Encoding						|
 |---|-----------------------|------|--------|---|---|-------------------------------|
 |AND|Bitwise AND			|010000|0000	|Rm |Rdn|AND\<c\> \<Rdn\>,\<Rm\>		|
@@ -22,6 +24,8 @@
 |BIC|Bit Clear				|010000|1110	|Rm |Rdn|BIC\<c\> \<Rdn\>,\<Rm\>		|
 |MVN|Bitwise NOT			|010000|1111	|Rm |Rd |MVN\<c\> \<Rd\>,\<Rm\>			|
 
+### Shift, add, sub, move
+
 |OP |Instruction						|XXX|XX|XX		|X		|XX		|XXX|XXX|Encoding						|
 |---|-----------------------------------|---|--|--------|-------|-------|---|---|-------------------------------|
 |LSL|Logical Shift Left (immediate)		|000|00|\#imm5	|		|		|Rm |Rd |LSL\<c\> \<Rd\>,\<Rm\>,\#imm5	|
@@ -31,3 +35,4 @@
 |SUB|Substract (register)				|000|11|01		|Rm		|		|Rn |Rd |SUB\<c\> \<Rd\>,\<Rn\>,\<Rm\>	|
 |ADD|Add (immediate)					|000|11|10		|\#imm3	|		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\#imm3	|
 |MOV|Move (immediate)					|001|00|Rd		|\#imm8	|		|	|	|MOV\<c\> \<Rd\>,\#imm8			|
+
