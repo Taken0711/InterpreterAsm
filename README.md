@@ -1,11 +1,11 @@
 # Instructions ARM
 
 
-	* \#0: an immediate value to be used by the operation
-	* \<c\>: an optional field. It specifies the condition under which the instruction is executed. If \<c\> is omitted, it defaults to always (AL).
-	* Rd: destination register
-	* Rm: register that contains the first operande
-	* Rn: register that contains the second operande (also destination register when 'Rdn')
+* \#0: an immediate value to be used by the operation
+* \<c\>: an optional field. It specifies the condition under which the instruction is executed. If \<c\> is omitted, it defaults to always (AL).
+* Rd: destination register
+* Rm: register that contains the first operande
+* Rn: register that contains the second operande (also destination register when 'Rdn')
 
 
 ### Data Processing
