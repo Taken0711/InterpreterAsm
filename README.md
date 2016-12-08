@@ -1,9 +1,12 @@
 # Instructions ARM
 
+
 \#0 is an immediate value to be used by the operation
 \<c\> Is an optional field. It specifies the condition under which the instruction is executed. If \<c\> is omitted, it defaults to always (AL).
 
+
 ### Data Processing
+
 
 OP |Instruction				|OPTYPE|OPCODE	|XXX|XXX|Encoding
 ---|------------------------|------|--------|---|---|--------
@@ -24,15 +27,33 @@ MUL|Multiply				|010000|1101	|Rn |Rdm|MUL\<c\> \<Rdm\>,\<Rn\>,\<Rdm\>
 BIC|Bit Clear				|010000|1110	|Rm |Rdn|BIC\<c\> \<Rdn\>,\<Rm\>
 MVN|Bitwise NOT				|010000|1111	|Rm |Rd |MVN\<c\> \<Rd\>,\<Rm\>
 
+
 ### Shift, add, sub, move
 
-OP |Instruction							|XXX|XX|XX		|X		|XX		|XXX|XXX|Encoding|
----|------------------------------------|---|--|--------|-------|-------|---|---|--------|
-LSL|Logical Shift Left (immediate)		|000|00|\#imm5	|_		|_		|Rm |Rd |LSL\<c\> \<Rd\>,\<Rm\>,\#imm5|
-LSR|Logical Shift Right (immediate)		|000|01|\#imm5	|_		|_		|Rm |Rd |LSR\<c\> \<Rd\>,\<Rm\>,\#imm5|
-ASR|Arithmetic Shift Right (immediate)	|000|10|\#imm5	|_		|_		|Rm |Rd |ASR\<c\> \<Rd\>,\<Rm\>,\#imm5|
-ADD|Add (register)						|000|11|00		|Rm		|_		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\<Rm\>|
-SUB|Substract (register)				|000|11|01		|Rm		|_		|Rn |Rd |SUB\<c\> \<Rd\>,\<Rn\>,\<Rm\>|
-ADD|Add (immediate)						|000|11|10		|\#imm3	|_		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\#imm3|
-MOV|Move (immediate)					|001|00|Rd		|_		|\#imm8	|_	|_	|MOV\<c\> \<Rd\>,\#imm8|
 
+OP |Instruction							|XXX|XX|XX		|X		|XX		|XXX|XXX|Encoding
+---|------------------------------------|---|--|--------|-------|-------|---|---|--------
+LSL|Logical Shift Left (immediate)		|000|00|\#imm5	|_		|_		|Rm |Rd |LSL\<c\> \<Rd\>,\<Rm\>,\#imm5
+LSR|Logical Shift Right (immediate)		|000|01|\#imm5	|_		|_		|Rm |Rd |LSR\<c\> \<Rd\>,\<Rm\>,\#imm5
+ASR|Arithmetic Shift Right (immediate)	|000|10|\#imm5	|_		|_		|Rm |Rd |ASR\<c\> \<Rd\>,\<Rm\>,\#imm5
+ADD|Add (register)						|000|11|00		|Rm		|_		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\<Rm\>
+SUB|Substract (register)				|000|11|01		|Rm		|_		|Rn |Rd |SUB\<c\> \<Rd\>,\<Rn\>,\<Rm\>
+ADD|Add (immediate)						|000|11|10		|\#imm3	|_		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\#imm3
+MOV|Move (immediate)					|001|00|Rd		|_		|\#imm8	|_	|_	|MOV\<c\> \<Rd\>,\#imm8
+
+
+### Load, Store
+
+
+OP |Instruction					|XXXXX|XXXXX	|XXX|XXX|Encoding
+---|----------------------------|-----|---------|---|---|--------
+STR|Store Register (immediate)	|01100|\#imm5	|Rn	|Rt	|STR\<c\> \<Rt\>, \[\<Rn\>,\#imm5\]
+LDR|Load Register (immediate)	|01101|\#imm5	|Rn |Rt |LDR\<c\> \<Rt\>, \[\<Rn\>,\#imm5\]
+
+
+### Branch
+
+
+OP |Instruction	|XXXX|XXXX|XXXXXXXX	|Encoding
+---|------------|----|----|---------|--------
+B  |Branch		|1101|cond|\#imm8	|B\<c\> \<label\>
