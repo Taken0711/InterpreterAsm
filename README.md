@@ -38,7 +38,6 @@ LSR	|Logical Shift Right (immediate)	|000	|01	|\#imm5	|_		|_		|Rm |Rd |LSR\<c\> 
 ASR	|Arithmetic Shift Right (immediate)	|000	|10	|\#imm5	|_		|_		|Rm |Rd |ASR\<c\> \<Rd\>,\<Rm\>,\#imm5
 ADD	|Add (register)						|000	|11	|00		|Rm		|_		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\<Rm\>
 SUB	|Substract (register)				|000	|11	|01		|Rm		|_		|Rn |Rd |SUB\<c\> \<Rd\>,\<Rn\>,\<Rm\>
-ADD	|Add (immediate)					|000	|11	|10		|\#imm3	|_		|Rn |Rd |ADD\<c\> \<Rd\>,\<Rn\>,\#imm3
 MOV	|Move (immediate)					|001	|00	|Rd		|_		|\#imm8	|_	|_	|MOV\<c\> \<Rd\>,\#imm8
 
 
