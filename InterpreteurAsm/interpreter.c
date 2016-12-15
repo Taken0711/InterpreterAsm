@@ -29,7 +29,7 @@ void interprete(char *src_path, char *dst_path) {
 	if (src == NULL) {
 		printf("FATAL ERROR: cannot open source file.");
 		exit(1);
-	} else if (dst == NULL) {
+	} else if (dst == NULL) {	
 		printf("FATAL ERROR: cannot open destination file.");
 		exit(1);
 	}
@@ -43,16 +43,82 @@ void interprete(char *src_path, char *dst_path) {
 	char instruction[] = next_token(str);
 
 	if (strcmp(instruction, "AND")) {
-		// Skip the "R"
-		line_index++;
 		int arg1 = atoi(next_token(str));
-		line_index++;
 		int arg2 = atoi(next_token(str));
 		output = (0x0100000000 << 6) + (arg2 << 3) + arg1;
 	}
-	else if (strcmp(instruction, "EOR"))
-	{
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	else if (strcmp(instruction, "RSB")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001001 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "CMP")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001010 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "CMN")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001011 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "ORR")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001100 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "MUL")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001101 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "BIC")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001110 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "MVN")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001111 << 6) + (arg2 << 3) + arg1;
 	}
 
 

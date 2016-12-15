@@ -19,7 +19,7 @@ LSR|Logical Shift Right		|010000|0011	|Rm |Rdn|LSR \<Rdn\>,\<Rm\>
 ASR|Arithmetic Shift Right	|010000|0100	|Rm |Rdn|ASR \<Rdn\>,\<Rm\>
 ADC|Add with Carry			|010000|0101	|Rm |Rdn|ADC \<Rdn\>,\<Rm\>
 SBC|Substract with Carry	|010000|0110	|Rm |Rdn|SBC \<Rdn\>,\<Rm\>
-ROR|Rotate Right			|010000|0110	|Rm |Rdn|ROR \<Rdn\>,\<Rm\>
+ROR|Rotate Right			|010000|0111	|Rm |Rdn|ROR \<Rdn\>,\<Rm\>
 TST|Test					|010000|1000	|Rm |Rn |TST \<Rn\>,\<Rm\>
 RSB|Reverse Substract		|010000|1001	|Rn |Rd |RSB \<Rd\>,\<Rn\>,\#0
 CMP|Compare Registers		|010000|1010	|Rm |Rn |CMP \<Rn\>,\<Rm\>
