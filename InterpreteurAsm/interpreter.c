@@ -8,8 +8,8 @@ int line_index = 0;
 
 char* next_token(char str[]) {
 	char *res = malloc(sizeof(char)*10);
-	int i = 0;
-	for (int i=0; str[line_index] != ' ' || str[line_index] != '\n'; line_index++,i++) {
+	int i;
+	for (i = 0; str[line_index] != ',' || str[line_index] != ' ' || str[line_index] != '\n'; line_index++, i++) {
 		res[i] = str[line_index];
 	}
 	res[i] = '\0';
