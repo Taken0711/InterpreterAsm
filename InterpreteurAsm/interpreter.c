@@ -42,6 +42,8 @@ void interprete(char *src_path, char *dst_path) {
 	fgets(str, MAX_SIZE, src);
 	char instruction[] = next_token(str);
 
+	// Data Processing
+
 	if (strcmp(instruction, "AND")) {
 		int arg1 = atoi(next_token(str));
 		int arg2 = atoi(next_token(str));
@@ -110,6 +112,7 @@ void interprete(char *src_path, char *dst_path) {
 	else if (strcmp(instruction, "MUL")) {
 		int arg1 = atoi(next_token(str));
 		int arg2 = atoi(next_token(str));
+		next_token(str);
 		output = (0x0100001101 << 6) + (arg2 << 3) + arg1;
 	}
 	else if (strcmp(instruction, "BIC")) {
@@ -123,6 +126,7 @@ void interprete(char *src_path, char *dst_path) {
 		output = (0x0100001111 << 6) + (arg2 << 3) + arg1;
 	}
 
+	// Shift, add, sub, move
 }
 
 void print_usage() {
