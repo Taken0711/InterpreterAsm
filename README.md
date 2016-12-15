@@ -48,8 +48,8 @@ MOV	|Move (immediate)					|001	|00	|Rd		|_		|\#imm8	|_	|_	|MOV \<Rd\>,\#imm8
 
 OP |Instruction					|XXXXX|XXXXX	|XXX|XXX|Encoding
 ---|----------------------------|-----|---------|---|---|--------
-STR|Store Register (immediate)	|01100|\#imm5	|Rn	|Rt	|STR \<Rt\>, \[\<Rn\>,\#imm5\]
-LDR|Load Register (immediate)	|01101|\#imm5	|Rn |Rt |LDR \<Rt\>, \[\<Rn\>,\#imm5\]
+STR|Store Register (immediate)	|01100|\#imm5	|Rn	|Rt	|STR \<Rt\>, \[\<Rn\>, \#\<imm5\>\]
+LDR|Load Register (immediate)	|01101|\#imm5	|Rn |Rt |LDR \<Rt\>, \[\<Rn\>, \#\<imm5\>\]
 
 
 ### Branch
