@@ -54,7 +54,10 @@ LDR|Load Register (immediate)	|01101|\#imm5	|Rn |Rt |LDR \<Rt\>, \[\<Rn\>, \#imm
 
 ### Branch
 
+* <cond> cannot be omitted !
+* imm32 = SignExtend(imm8:'0', 32)
+* imm32 is the Program Counter value of the label in the program. imm8 must be encoded to set the correct value for imm32.
 
 OP |Instruction	|XXXX|XXXX|XXXXXXXX	|Encoding
 ---|------------|----|----|---------|--------
-B  |Branch		|1101|cond|\#imm8	|B \<label\>
+B  |Branch		|1101|cond|\#imm8	|B\<cond\> \<label\>
