@@ -86,7 +86,7 @@ void interprete(char *src_path, char *dst_path) {
 		int arg1 = atoi(next_token(str));
 		int arg2 = atoi(next_token(str));
 		output = (0x0100001000 << 6) + (arg2 << 3) + arg1;
-
+	}
 	else if (strcmp(instruction, "RSB")) {
 		int arg1 = atoi(next_token(str));
 		int arg2 = atoi(next_token(str));
