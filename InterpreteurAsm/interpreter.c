@@ -7,7 +7,7 @@
 int line_index = 0;
 
 char* next_token(char str[]) {
-	char res[10];
+	char *res = malloc(sizeof(char)*10);
 	int i = 0;
 	for (int i=0; str[line_index] != ' ' || str[line_index] != '\n'; line_index++,i++) {
 		res[i] = str[line_index];
@@ -43,19 +43,50 @@ void interprete(char *src_path, char *dst_path) {
 	char instruction[] = next_token(str);
 
 	if (strcmp(instruction, "AND")) {
-		// Skip the "R"
-		line_index++;
 		int arg1 = atoi(next_token(str));
-		line_index++;
 		int arg2 = atoi(next_token(str));
 		output = (0x0100000000 << 6) + (arg2 << 3) + arg1;
 	}
-	else if (strcmp(instruction, "EOR"))
-	{
-
+	else if (strcmp(instruction, "EOR")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000001 << 6) + (arg2 << 3) + arg1;
 	}
-
-
+	else if (strcmp(instruction, "LSL")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000010 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "LSR")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000011 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "ASR")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000100 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "ADC")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000101 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "SBC")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000110 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "ROR")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100000111 << 6) + (arg2 << 3) + arg1;
+	}
+	else if (strcmp(instruction, "TST")) {
+		int arg1 = atoi(next_token(str));
+		int arg2 = atoi(next_token(str));
+		output = (0x0100001000 << 6) + (arg2 << 3) + arg1;
+	}
 
 }
 
