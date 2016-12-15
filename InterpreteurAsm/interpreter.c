@@ -3,6 +3,10 @@
 #include <assert.h>
 
 #define MAX_SIZE 10000000
+#define SEPARATORS  " ,"
+
+char *DATA_PROCESS[16] = { "AND", "EOR", "LSL", "LSR", "ASR", "ADC", "SBC", "ROR",
+"TST", "RSB", "CMP", "CMN", "ORR", "MUL", "BIC", "MVN" };
 
 int line_index = 0;
 
@@ -16,6 +20,17 @@ char* next_token(char str[]) {
 	line_index++;
 	return res;
 }
+
+char* data_process(char *line) {
+	char *token;
+	char *instruction = strtok(line, SEPARATORS);
+	int codeInstr;
+	int arg1 = atoi(strtok(line, SEPARATORS));
+	int arg2 = atoi(strtok(line, SEPARATORS));
+	return (codeInstr << 6) + (arg2 << 3) + arg1;
+}
+
+
 
 void interprete(char *src_path, char *dst_path) {
 	FILE* src = NULL;
@@ -38,89 +53,20 @@ void interprete(char *src_path, char *dst_path) {
 	// Start translating
 	
 
-	char str[MAX_SIZE];
-	fgets(str, MAX_SIZE, src);
-	char instruction[] = next_token(str);
 
-	if (strcmp(instruction, "AND")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000000 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "EOR")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000001 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "LSL")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000010 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "LSR")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000011 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "ASR")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000100 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "ADC")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000101 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "SBC")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000110 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "ROR")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100000111 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "TST")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001000 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "RSB")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001001 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "CMP")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001010 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "CMN")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001011 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "ORR")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001100 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "MUL")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001101 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "BIC")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001110 << 6) + (arg2 << 3) + arg1;
-	}
-	else if (strcmp(instruction, "MVN")) {
-		int arg1 = atoi(next_token(str));
-		int arg2 = atoi(next_token(str));
-		output = (0x0100001111 << 6) + (arg2 << 3) + arg1;
+	char str[MAX_SIZE];
+	while (fgets(str, sizeof(str), src)) {
+		char *line;
+		int start_line = 1;
+		for (line = strtok(str, "\n"); line; line = strtok(NULL, "\n")) {
+			char *instruction = strtok(line, SEPARATORS);
+			if (is_in(instruction, DATA_PROCESS)) {
+				int codeInstr; // mettre au bon endroit
+				int arg1 = atoi(strtok(line, SEPARATORS));
+				int arg2 = atoi(strtok(line, SEPARATORS));
+				return (codeInstr << 6) + (arg2 << 3) + arg1;
+			}
+		}
 	}
 
 }
