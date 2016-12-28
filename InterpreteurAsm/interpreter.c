@@ -1,36 +1,37 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 #define MAX_SIZE 10000000
-#define SEPARATORS  " ,"
+#define SEPARATORS  " ,R"
+#define MAX_ARGS 3
+#define MAX_SIZE_ARGS 5
 
 char *DATA_PROCESS[16] = { "AND", "EOR", "LSL", "LSR", "ASR", "ADC", "SBC", "ROR",
 "TST", "RSB", "CMP", "CMN", "ORR", "MUL", "BIC", "MVN" };
+char *SASM[6] = { "LSL", "LSR", "ASR", "ADD", "SUB", "MOV" };
 
 int line_index = 0;
 
-char* next_token(char str[]) {
-	char *res = malloc(sizeof(char)*10);
-	int i = 0;
-	for (int i=0; str[line_index] != ' ' || str[line_index] != '\n'; line_index++,i++) {
-		res[i] = str[line_index];
+
+
+void decode_args(char *line, char **args, int *nb_args) {
+	char *arg;
+	(*nb_args) = 0;
+	for (arg = strtok(line, SEPARATORS); arg; arg = strtok(NULL, SEPARATORS)) {
+		*(args++) = arg;
+		(*nb_args)++;
 	}
-	res[i] = '\0';
-	line_index++;
-	return res;
 }
 
-char* data_process(char *line) {
-	char *token;
-	char *instruction = strtok(line, SEPARATORS);
-	int codeInstr;
-	int arg1 = atoi(strtok(line, SEPARATORS));
-	int arg2 = atoi(strtok(line, SEPARATORS));
-	return (codeInstr << 6) + (arg2 << 3) + arg1;
+int search(char *val, char **arr, int size) {
+	for (int i = 0; i < size; i++) {
+		if (strcmp(val, arr[i]))
+			return i;
+	}
+	return -1;
 }
-
-
 
 void interprete(char *src_path, char *dst_path) {
 	FILE* src = NULL;
@@ -39,8 +40,8 @@ void interprete(char *src_path, char *dst_path) {
 	int output;
 
 	// Open and check the file
-	fopen_s(src, src_path, "r");
-	fopen_s(dst , dst_path, "w");
+	src = fopen(src_path, "r");
+	dst = fopen(dst_path, "w");
 	if (src == NULL) {
 		printf("FATAL ERROR: cannot open source file.");
 		exit(1);
@@ -57,16 +58,41 @@ void interprete(char *src_path, char *dst_path) {
 	char str[MAX_SIZE];
 	while (fgets(str, sizeof(str), src)) {
 		char *line;
+		char args[MAX_ARGS][MAX_SIZE_ARGS];
+		int *nb_args = 0;
+		int code_instr;
 		int start_line = 1;
 		for (line = strtok(str, "\n"); line; line = strtok(NULL, "\n")) {
 			char *instruction = strtok(line, SEPARATORS);
-			if (is_in(instruction, DATA_PROCESS)) {
-				int codeInstr; // mettre au bon endroit
-				int arg1 = atoi(strtok(line, SEPARATORS));
-				int arg2 = atoi(strtok(line, SEPARATORS));
-				return (codeInstr << 6) + (arg2 << 3) + arg1;
+			decode_args(line, args, nb_args);
+			if ((code_instr = search(instruction, DATA_PROCESS, 16)) != -1 && *nb_args == 2) {
+				int arg1 = atoi(args[0]);
+				int arg2 = atoi(args[1]);
+				output = (code_instr << 6) + (arg2 << 3) + arg1;
+			}
+			else if ((code_instr = search(instruction, SASM, 6)) != -1) {
+				if (code_instr < 3) {
+					int arg1 = atoi(args[0]);
+					int arg2 = atoi(args[1]);
+					int imm = atoi(args[2]);
+					output = (code_instr << 11) + (imm << 9) + (0 << 6) + (arg2 << 3) + arg1;
+				}
+				else if (code_instr < 5) {
+					int arg1 = atoi(args[0]);
+					int arg2 = atoi(args[1]);
+					int arg3 = atoi(args[2]);
+					output = (0x00011 << 11) + ((code_instr%3) << 9) + (arg3 << 8) + (0 << 6) + (arg2 << 3) + arg1;
+				}
+				else {
+					int arg1 = atoi(args[0]);
+					int arg2 = atoi(args[1]);
+					output = (0x00100 << 11) + (arg1 << 9) + (0 << 8) + (arg1 << 6) + 0;
+				}
 			}
 		}
+		char s_output[5];
+		sprintf(s_output, "%x", output);
+		fputs(s_output, dst);
 	}
 
 }
