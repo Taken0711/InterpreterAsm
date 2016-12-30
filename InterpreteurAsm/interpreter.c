@@ -4,15 +4,15 @@
 #include <string.h>
 
 #define MAX_SIZE 1000
-#define SEPARATORS  " ,R#"
+#define SEPARATORS  " ,R#[]"
 #define MAX_ARGS 3
 #define MAX_SIZE_ARGS 5
 
 
-char *DATA_PROCESS[16] = { "AND", "EOR", "LSL", "LSR", "ASR", "ADC", "SBC", "ROR",
-"TST", "RSB", "CMP", "CMN", "ORR", "MUL", "BIC", "MVN" };
+char *DATA_PROCESS[16] = { "AND", "EOR", "LSL", "LSR", "ASR", "ADC", "SBC", "ROR", "TST", "RSB", "CMP", "CMN", "ORR", "MUL", "BIC", "MVN" };
 char *SASM[6] = { "LSL", "LSR", "ASR", "ADD", "SUB", "MOV" };
-
+char *LS[2] = { "STR", "LDR" };
+char *BR[14] = { "BEQ", "BNE", "BCS", "BCC", "BMI", "BPL", "BVS", "BVC", "BHI", "BLS", "BGE", "BLT", "BGT", "BLE" };
 
 void print_binary(int n) {
 	for (int c = 15; c >= 0; c--) {
@@ -93,9 +93,24 @@ void interprete(char *src_path, char *dst_path) {
 				}
 				else {
 					int arg1 = atoi(args[0]);
-					int arg2 = atoi(args[1]);
-					output = (0b00100 << 11) + (arg1 << 9) + (0b0 << 8) + (arg2 << 6) + 0b000000;
+					int imm = atoi(args[1]);
+					output = (0b00100 << 11) + (arg1 << 9) + (0b0 << 8) + (imm << 6) + 0b000000;
 				}
+			}
+			else if ((code_instr = search(instruction, LS, 2)) != -1) {
+			        int arg1 = atoi(args[0]);
+				int arg2 = atoi(args[1]);
+				int imm = atoi(args[2]);
+				output = (0b011 << 13) + (code_instr << 11) + (imm << 6) + (arg2 << 3) + arg1;
+			}
+			else if ((code_instr = search(instruction, BR, 14)) != -1) {
+
+				// Look for the label, then compute its offset
+				// from the branch, passing it as an immediate
+				// value.
+			  
+			  int imm = 0;
+			  output = (0b1101 << 12) + (code_instr << 8) + imm;
 			}
 			start_line++;
 			char s_output[4];
@@ -111,7 +126,7 @@ void interprete(char *src_path, char *dst_path) {
 
 void print_usage() {
 	printf("Transforme les fichiers ASM en fichier qui peuvent etre ouvert par le micro-processeur.\n\
-			Usage: interpreter src dst\n");
+		Usage: interpreter src dst\n");
 }
 
 int main(int argc, char *argv[]) {
