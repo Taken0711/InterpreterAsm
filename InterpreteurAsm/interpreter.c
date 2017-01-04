@@ -144,10 +144,10 @@ void interprete(char *src_path, char *dst_path) {
 				}
 				output = (0b1101 << 12) + (code_instr << 8) + imm;
 			}
-			char s_output[4];
+			char s_output[5];
 			print_binary(output);
 			putchar('\n');
-			sprintf(s_output, "%x", output);
+			sprintf(s_output, "%x ", output);
 			fputs(s_output, dst);
 		}
 	}
