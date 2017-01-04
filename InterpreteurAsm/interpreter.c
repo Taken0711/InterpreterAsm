@@ -53,8 +53,6 @@ void interprete(char *src_path, char *dst_path) {
 	FILE* src = NULL;
 	FILE* dst = NULL;
 
-	int output;
-
 	// Open and check the file
 	src = fopen(src_path, "r");
 	dst = fopen(dst_path, "w");
@@ -76,7 +74,6 @@ void interprete(char *src_path, char *dst_path) {
 	// Parse once to save label positions and names
 	while (fgets(str, MAX_SIZE, src) && lineCount < 256) {
 		lineCount++;
-		int tknCount = 0;
 		if (!strchr(str, ' ')) {
 			strcpy(labels[lblCount].name, strtok(str, "\n"));
 			labels[lblCount].line = lineCount;
@@ -100,6 +97,7 @@ void interprete(char *src_path, char *dst_path) {
 		char args[MAX_ARGS][MAX_SIZE_ARGS];
 		int nb_args = 0;
 		int code_instr;
+		int output = 0;
 		for (line = strtok(str, "\n"); line; line = strtok(NULL, "\n")) {
 			printf("%s\n", line);
 			char instruction[4];
@@ -151,7 +149,6 @@ void interprete(char *src_path, char *dst_path) {
 			putchar('\n');
 			sprintf(s_output, "%x", output);
 			fputs(s_output, dst);
-			printf("\n");
 		}
 	}
 	if (fclose(src)) {
