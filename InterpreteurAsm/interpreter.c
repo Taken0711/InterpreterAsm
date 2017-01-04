@@ -68,6 +68,7 @@ void interprete(char *src_path, char *dst_path) {
 	}
 	assert(src != NULL && dst != NULL);
 
+
 	char str[MAX_SIZE];
 	int lblCount = 0;
 	struct Label labels[256];
@@ -93,6 +94,8 @@ void interprete(char *src_path, char *dst_path) {
 		printf("FATAL ERROR: cannot open source file.\n");
 		exit(1);
 	}
+
+	fputs("v2.0 raw\n", dst);
 
 	// Start translating
 	while (fgets(str, MAX_SIZE, src)) {
