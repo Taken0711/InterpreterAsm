@@ -1,3 +1,7 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -153,7 +157,7 @@ void interprete(char *src_path, char *dst_path) {
 	if (fclose(src)) {
 		printf("Error: could not close source file.\n");
 	}
-	else if (fclose(dst)) {
+	if (fclose(dst)) {
 		printf("Error: could not close destination file.\n");
 	}
 }
