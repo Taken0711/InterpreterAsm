@@ -53,8 +53,6 @@ void interprete(char *src_path, char *dst_path) {
 	FILE* src = NULL;
 	FILE* dst = NULL;
 
-	int output;
-
 	// Open and check the file
 	src = fopen(src_path, "r");
 	dst = fopen(dst_path, "w");
@@ -68,6 +66,7 @@ void interprete(char *src_path, char *dst_path) {
 	}
 	assert(src != NULL && dst != NULL);
 
+
 	char str[MAX_SIZE];
 	int lblCount = 0;
 	struct Label labels[256];
@@ -76,7 +75,6 @@ void interprete(char *src_path, char *dst_path) {
 	// Parse once to save label positions and names
 	while (fgets(str, MAX_SIZE, src) && lineCount < 256) {
 		lineCount++;
-		int tknCount = 0;
 		if (!strchr(str, ' ')) {
 			strcpy(labels[lblCount].name, strtok(str, "\n"));
 			labels[lblCount].line = lineCount;
@@ -94,12 +92,15 @@ void interprete(char *src_path, char *dst_path) {
 		exit(1);
 	}
 
+	fputs("v2.0 raw\n", dst);
+
 	// Start translating
 	while (fgets(str, MAX_SIZE, src)) {
 		char *line;
 		char args[MAX_ARGS][MAX_SIZE_ARGS];
 		int nb_args = 0;
 		int code_instr;
+		int output = 0;
 		for (line = strtok(str, "\n"); line; line = strtok(NULL, "\n")) {
 			printf("%s\n", line);
 			char instruction[4];
@@ -146,12 +147,11 @@ void interprete(char *src_path, char *dst_path) {
 				}
 				output = (0b1101 << 12) + (code_instr << 8) + imm;
 			}
-			char s_output[4];
+			char s_output[5];
 			print_binary(output);
 			putchar('\n');
-			sprintf(s_output, "%x", output);
+			sprintf(s_output, "%x ", output);
 			fputs(s_output, dst);
-			printf("\n");
 		}
 	}
 	if (fclose(src)) {
