@@ -1,7 +1,7 @@
 # Utilisation
 
 Transforme les fichiers ASM en fichier qui peuvent etre ouvert par le micro-processeur.
-		Usage: interpreter src dst
+Usage: interpreter src dst
 
 # Instructions ARM
 
